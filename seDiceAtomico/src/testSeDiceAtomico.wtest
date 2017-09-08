@@ -1,0 +1,34 @@
+import seDiceAtomico.*
+test "burns con 10 var produce 1 mkwh" {
+    burns.varillas(10)
+    assert.equals (1, burns.produccionEnergetica())
+}
+test "exBosque con 20 ton produce 18.5 mkwh"{
+	exBosque.capacidad(20)
+	assert.equals (18.5, exBosque.produccionEnergetica())
+}
+test "elSuspiro produce 2 mkhw"{
+	assert.equals (2, elSuspiro.produccionEnergetica())
+}
+test "solo exBosque es contaminante"{
+	burns.varillas(10)
+	exBosque.capacidad(20)
+	assert.equals([exBosque],springfield.centralesContaminantes())
+}
+test "springfield cubre necesidad energetica de 20 mkhw"{
+	burns.varillas(10)
+	exBosque.capacidad(20)
+	springfield.necesidad(20)
+	assert.that(springfield.cubreNecesidad())
+	}
+test "springfield al horno con necesidad energetica de 30 mkhw"{
+	burns.varillas(10)
+	exBosque.capacidad(20)
+	springfield.necesidad(30)
+	assert.that (springfield.estaAlHorno())
+}
+test "centrales mas productoras de la region es exBosque de springfield y hidroelectrica de albuquerque"{
+	burns.varillas(10)
+	exBosque.capacidad(20)
+	assert.equals([exBosque,hidroelectrica],region.centralCiudadMasProductiva())
+}
